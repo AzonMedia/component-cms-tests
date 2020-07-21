@@ -1,5 +1,5 @@
 {
-    "name": "guzaba-platform/guzaba-platform-tests",
+    "name": "guzaba-platform/cms-tests",
     "type": "guzaba-platform-component",
     "description": "GuzabaPlatform CMS tests",
     "keywords": ["tests", "automated tests", "api tests"],
