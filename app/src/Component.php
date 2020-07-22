@@ -21,9 +21,6 @@ use GuzabaPlatform\RequestCaching\Hooks\AdminEntry;
  */
 class Component extends BaseComponent implements ComponentInterface
 {
-
-    protected const CONFIG_RUNTIME = [];
-
     protected const COMPONENT_NAME = "CMS Tests";
     //https://components.platform.guzaba.org/component/{vendor}/{component}
     protected const COMPONENT_URL = 'https://components.platform.guzaba.org/component/guzaba-platform/component-cms-tests';
@@ -33,6 +30,5 @@ class Component extends BaseComponent implements ComponentInterface
     protected const VENDOR_NAME = 'Azonmedia';
     protected const VENDOR_URL = 'https://azonmedia.com';
     protected const ERROR_REFERENCE_URL = 'https://github.com/AzonMedia/component-cms-tests/tree/master/docs/ErrorReference/';
-
 
 }
