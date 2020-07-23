@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace GuzabaPlatform\Cms\Tests\Controllers;
 
+use Azonmedia\Exceptions\RecordNotFoundException;
 use Guzaba2\Http\Method;
 use GuzabaPlatform\Cms\Models\Page;
 use GuzabaPlatform\Platform\Application\BaseTestController;
@@ -23,6 +24,9 @@ class TestPage extends BaseTestController
             ],
             '/tests/cms/page/2' => [
                 Method::HTTP_POST => [self::class, 'test_page_1'],
+            ],
+            '/tests/cms/page/alias' => [
+                Method::HTTP_GET => [self::class, 'test_page_alias'],
             ],
         ]
     ];
@@ -68,6 +72,36 @@ class TestPage extends BaseTestController
         } else {
             return self::get_structured_ok_response( ['response' => 'fail'] );
         }
+    }
+
+    /**
+     * Can a page be retreived by its slug (alias).
+     * @return ResponseInterface
+     * @throws \Azonmedia\Exceptions\InvalidArgumentException
+     * @throws \Guzaba2\Base\Exceptions\InvalidArgumentException
+     * @throws \Guzaba2\Base\Exceptions\LogicException
+     * @throws \Guzaba2\Base\Exceptions\RunTimeException
+     * @throws \Guzaba2\Coroutine\Exceptions\ContextDestroyedException
+     * @throws \Guzaba2\Kernel\Exceptions\ConfigurationException
+     * @throws \ReflectionException
+     */
+    public function test_page_alias(): ResponseInterface
+    {
+        $Page = self::get_existing_page();
+        if ($Page->page_slug) {
+            try {
+                $Page2 = new Page($Page->page_slug);
+                return self::get_structured_ok_response( ['response' => 'OK'] );
+            } catch (RecordNotFoundException $Exception) {
+                return self::get_structured_ok_response( ['response' => 'fail', 'message' => 'The test failed. The page was not found by its alias.' ] );
+            } catch (\Exception $Exception) {
+                return self::get_structured_ok_response( ['response' => 'fail', 'message' => $Exception->getMessage() ] );
+            }
+
+        } else {
+            return self::get_structured_ok_response( ['response' => 'fail', 'message' => 'The test page does not have slug/alias.'] );
+        }
+
     }
 
     /**

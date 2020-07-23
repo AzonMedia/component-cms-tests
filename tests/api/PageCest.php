@@ -21,4 +21,11 @@ class PageCest
         $I->sendPOST('/tests/cms/page/2');
         $I->seeResponseCodeIs(HttpCode::OK);
     }
+
+    public function test_page_alias(ApiTester $I): void
+    {
+        $I->sendGET('/tests/cms/page/alias');
+        $I->seeResponseCodeIs(HttpCode::OK);
+    }
+
 }
